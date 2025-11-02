@@ -23,7 +23,10 @@ def get_db() -> Generator:
         db.close()
 
 def get_stocks(db: Session, skip: int = 0, limit: int = 10,) -> List[Stock]:
-    return db.query(Stock).offset(skip).limit(limit).all()
+    stocks = db.query(Stock).offset(skip).limit(limit).all()
+    stocks_dict = [stock.__dict__ for stock in stocks]
+    print(stocks_dict)
+    return stocks_dict
 
 def add_stock(db: Session, stock: StockCreate):
     stock_data = stock.model_dump()
@@ -31,6 +34,7 @@ def add_stock(db: Session, stock: StockCreate):
     db.add(stock_db)
     db.commit()
     db.refresh(stock_db)
+    print(stock_db.__dict__)
     return stock_db
 
 def calculate_average_stocks(db: Session):
