@@ -16,7 +16,7 @@ def list_stocks(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
 def create_stocks(stock: schemas.StockCreate, db: Session = Depends(get_db)):
     return add_stock(db, stock)
 
-@app.get("stocks/average", response_model=schemas.StockAnalyzedResponse, status_code=status.HTTP_200_OK)
+@app.get("/stocks/average", response_model=schemas.Average, status_code=status.HTTP_200_OK)
 def get_average_stocks(db: Session = Depends(get_db)):
     media = calculate_average_stocks(db)
     return {"average_price": media}

@@ -1,15 +1,17 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker, Session
 from typing import Generator, List
-from models import Stock
+
 from schemas import StockCreate
 import pandas as pd
 
-engine = create_engine("sqlite://stock.db")
+engine = create_engine("sqlite:///stock.db")
 session = sessionmaker(bind=engine)
 
 class Base(DeclarativeBase):
     pass
+
+from models import Stock
 
 Base.metadata.create_all(bind=engine)
 
@@ -28,7 +30,7 @@ def add_stock(db: Session, stock: StockCreate):
     stock_db = Stock(**stock_data)
     db.add(stock_db)
     db.commit()
-    db.refresh()
+    db.refresh(stock_db)
     return stock_db
 
 def calculate_average_stocks(db: Session):
