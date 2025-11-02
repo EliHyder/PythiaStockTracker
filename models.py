@@ -7,5 +7,3 @@ class Stock(Base):
     symbol = Column(String, unique=True)
     name = Column(String)
     current_price = Column(Float)
-
-    

@@ -8,9 +8,14 @@ class StockBase(BaseModel):
 class StockCreate(StockBase):
     pass
 
-class StockResponse(BaseModel):
+class StockResponse(StockBase):
     id: int
     model_config = ConfigDict(from_attributes=True)
 
 class Average(BaseModel):
     average_price: float
+
+class VolatilityResponse(BaseModel):
+    stock_id: int
+    symbol: str
+    volatility: float # O desvio padrão simulado
